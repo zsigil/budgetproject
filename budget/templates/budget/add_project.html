@@ -1,0 +1,36 @@
+{% extends 'budget/base.html' %}
+{% load static %}
+
+{% block content %}
+
+  <h1 class="text-center my-3">ADD NEW PROJECT</h1>
+  <form method="POST">
+    {% csrf_token %}
+
+    <div class="form-group">
+      {{form.as_p}}
+    </div>
+
+
+    <div class="form-group">
+      <label for="categoryInput">Expense categories</label>
+      <input class="form-control" type="text" name="categoryInput" id="categoryInput" placeholder="Enter category and hit 'enter'">
+      <input type="hidden" name="categoriesString">
+    </div>
+
+    <ul class="categorylist" id="categorylist">
+
+    </ul>
+
+    <div class="form-group">
+      <button class="btn btn-info" type="submit" name="button">START PROJECT</button>
+    </div>
+
+
+
+  </form>
+
+
+  <script src="{% static 'budget/js/script.js' %}"></script>
+
+{% endblock %}

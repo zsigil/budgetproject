@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from django.urls import reverse, reverse_lazy
 
 # Create your models here.
 class Project(models.Model):
@@ -13,6 +14,9 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse_lazy('budget:project_list')
 
 
 class Category(models.Model):
