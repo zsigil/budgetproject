@@ -20,7 +20,7 @@ class Project(models.Model):
 
 
 class Category(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="categories")
     name = models.CharField(max_length=100)
 
     def __str__(self):
