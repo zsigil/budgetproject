@@ -18,6 +18,17 @@ class Project(models.Model):
     def get_absolute_url(self):
         return reverse_lazy('budget:project_list')
 
+    def budget_left(self):
+        all_expenses = Expense.objects.filter(project=self)
+        total_amount = 0
+        for expense in all_expenses:
+            total_amount += expense.amount
+
+        return self.budget - total_amount
+
+    def transactions(self):
+        all_expenses = Expense.objects.filter(project=self)
+        return len(all_expenses)
 
 class Category(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="categories")

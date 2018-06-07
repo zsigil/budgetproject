@@ -14,15 +14,23 @@
 
   <div class="card bg-light">
     <div class="card-body">
-      <p class="card-text">MONEY SPENT</p>
-      <h3 class="card-title">$300</h3>
+      <p class="card-text">BUDGET LEFT</p>
+
+      {% if project.budget_left > 0 %}
+      <h3 class="card-title text-success">${{ project.budget_left }}</h3>
+      {% else %}
+      <h3 class="card-title text-danger">${{ project.budget_left }}</h3>
+      {% endif %}
+
+
+
     </div>
   </div>
 
   <div class="card bg-light">
     <div class="card-body">
-      <p class="card-text"> BUDGET LEFT</p>
-      <h3 class="card-title">$2700</h3>
+      <p class="card-text">Transactions</p>
+      <h3 class="card-title">{{ project.transactions }}</h3>
     </div>
   </div>
 
@@ -44,13 +52,13 @@
       </tr>
     </thead>
     <tbody>
-    
+
       {% for expense in expense_list %}
       <tr>
         <td>{{expense.title}}</td>
         <td>{{expense.category.name}}</td>
         <td>{{expense.amount}}
-            <a class="float-right"  href="#"><i class="fas fa-trash-alt"></i></a>
+            <button onclick="removeExpense(this)" data-id={{expense.id}} class="float-right"><i class="fas fa-trash-alt"></i></button>
         </td>
       </tr>
       {% endfor %}
@@ -106,5 +114,25 @@
 </div>
 
 
+<script>
+  function removeExpense(e){
 
+    let id = e.dataset.id
+    //e.data('id')
+
+    e.closest('tr').remove()
+
+    fetch('', {
+      method : "DELETE",
+      headers: {
+        'X-CSRFToken': '{{ csrf_token }}'
+      },
+      credentials: 'same-origin',
+      body : JSON.stringify({
+        'id':id
+      }),
+    })
+  }
+
+</script>
 {% endblock %}
