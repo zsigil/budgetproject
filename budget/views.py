@@ -9,7 +9,8 @@ import json
 
 # Create your views here.
 def project_list(request):
-    return render(request, 'budget/project_list.html')
+    all_projects = Project.objects.all()
+    return render(request, 'budget/project_list.html', { 'all_projects': all_projects})
 
 
 def project_detail(request, projectslug):
